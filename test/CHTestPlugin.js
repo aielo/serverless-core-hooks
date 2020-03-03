@@ -4,15 +4,19 @@ class CHTest {
     const triggers = [
       "before:core:init",
       "before:core:init",
-      "after:core:init",
       "before:core:run",
-      "after:core:run",
       "before:core:pluginmanager:loadallplugins",
-      "after:core:pluginmanager:loadallplugins",
       "before:core:pluginmanager:addplugin",
-      "after:core:pluginmanager:addplugin",
+      "before:core:pluginmanager.run",
       "before:core:utils:getversion",
+      "before:core:cli.setloadedplugins",
+      "after:core:init",
+      "after:core:run",
+      "after:core:pluginmanager:loadallplugins",
+      "after:core:pluginmanager:addplugin",
+      "after:core:pluginmanager.run",
       "after:core:utils:getversion",
+      "after:core:service:mergearrays"
     ];
     self.hooks = {}
     for (const trigger of triggers) {

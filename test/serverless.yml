@@ -1,5 +1,5 @@
 service: test
-   
+
 plugins:
     - ./
     - ../../serverless-core-hooks # ../ does not work properly
@@ -9,3 +9,9 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, env:stage, 'dev'}
   region: ${opt:region, env:region, 'us-east-1'}
+
+custom:
+  coreHooks:
+    objects:
+      - utils
+      - cli
