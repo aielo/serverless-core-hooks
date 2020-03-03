@@ -2,7 +2,7 @@ service: test
 
 plugins:
     - ./
-    - ../../serverless-core-hooks # ../ does not work properly
+    - ../../ # ../ does not work properly (includes this twice)
 
 provider:
   name: aws

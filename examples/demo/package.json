@@ -1,8 +1,8 @@
 {
-  "name": "test",
+  "name": "core-hooks-demo",
   "version": "0.1.0",
   "description": "",
-  "main": "CHTestPlugin.js",
+  "main": "CoreHooksDemo.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
