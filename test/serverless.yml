@@ -1,7 +1,8 @@
-service: example
+service: test
    
 plugins:
-    - ../
+    - ./
+    - ../../serverless-core-hooks # ../ does not work properly
 
 provider:
   name: aws
