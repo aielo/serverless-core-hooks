@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/aielo/serverless-core-hooks/issues"
   },
-  "homepage": "https://github.com/aielo/serverless-core-hooks#readme"
+  "homepage": "https://github.com/aielo/serverless-core-hooks#readme",
+  "devDependencies": {
+    "serverless": "^1.65.0"
+  }
 }
