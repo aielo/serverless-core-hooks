@@ -20,6 +20,12 @@ printf '\nexport PATH="\$PATH:$MODULES_DIR/.bin"\n' >> ~/.bashrc
 echo '--*.modules-folder "$MODULES_DIR"' >> /vagrant/.yarnrc
 WINHOSTFIX
 
+# VS Code settings (only if they do not exist; no replacement)
+VSCODE_DIR="/vagrant/.vscode"
+su - vagrant << VSCODE
+  [ ! -d $VSCODE_DIR ] && cp -r /vagrant/resources$VSCODE_DIR $VSCODE_DIR
+VSCODE
+
 # Node.js and (npm) dependencies
 su - vagrant << NODE
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
