@@ -78,7 +78,7 @@ class CoreHooksDemo {
   }
 
   log(message) {
-    this.sls.cli.log("[Demo] " + message);
+    this.sls.cli.log("[CH Demo] " + message);
   }
 }
 
