@@ -18,5 +18,8 @@
   "homepage": "https://github.com/aielo/serverless-core-hooks#readme",
   "devDependencies": {
     "serverless": "^1.65.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
