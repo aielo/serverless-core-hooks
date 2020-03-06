@@ -13,5 +13,10 @@ provider:
 custom:
   coreHooks:
     objects:
-      - utils
-      - variables
+      - serverless
+      - pluginManager
+      - cli
+      # - service
+      # - utils
+      # - variables
+      # - yamlParser
