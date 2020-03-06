@@ -1,84 +1,67 @@
 "use strict"
 
+const util = require("util");
+
 class CoreHooksDemo {
   constructor(serverless) {
     this.sls = serverless;
-    const self = this;
-    const triggers = [
-      "before:core:run",
-      "before:core:cli:setloadedplugins",
-      "before:core:pluginmanager:loadallplugins",
-      "before:core:pluginmanager:addplugin",
-      "before:core:pluginmanager:run",
-      "before:core:utils:getversion",
-      "before:demo:command",
-      "after:core:init",
-      "after:core:run",
-      "after:core:pluginmanager:loadallplugins",
-      "after:core:pluginmanager:addplugin",
-      "after:core:pluginmanager:run",
-      "after:core:utils:getversion",
-      "after:core:service:mergearrays",
-      "after:core:variables:populateservice",
-      "after:core:pluginmanager:run",
-      "after:demo:command"
-    ];
-    self.hooks = {}
-    for (const trigger of triggers) {
-      self.hooks[trigger] = function () {
-        const args = Object.values(arguments);
-        self.hook(trigger, ...args);
-      }
-    }
-    self.commands = {
+    this.commands = {
       demo: {
-        usage: "Does nothing except test CoreHooks",
+        usage: "Core Hooks plugin demonstration",
         lifecycleEvents: ["command"]
       }
     }
-    self.hooks["demo:command"] = self.command.bind(self);
-    self.hooks["before:core:init"] = self.enable.bind(self);
-    self.load();
+    this.hooks = {
+      // Regular hooks (and command)
+      "before:demo:command": () => { this.hook("before:demo:command") },
+      "demo:command": this.command.bind(this),
+      "after:demo:command": () => { this.hook("after:demo:command") },
+      // Core hooks
+      "before:pluginManager:loadAllPlugins": this.coreHook.bind(this),
+      "before:utils:getVersion": this.coreHook.bind(this),
+      "after:serverless:set:instanceId": this.coreHook.bind(this)
+    }
+    this.load();
   }
 
   command() {
-    let message = "Hi, I'm a command!";
-    message += " Checkout what triggered before and after me.";
-    this.log(message);
-    message = "Try setting SLS_CH_DEBUG=1 to see debugging info.";
-    this.log(message);
+    this.log("Hi, I'm a command!");
+    this.log("> Try setting SLS_CH_DEBUG=1 to see debugging info.");
   }
 
-  enable() {
-    if (this.sls.processedInput.commands.includes("demo")) {
-      this.sls._demoEnabled = true;
-    } else {
-      this.log("Demo is active but hooks output is suppressed.");
-      this.log("Use the 'demo' command to check it out!");
-    }
+  coreHook(event, trigger) {
+    this.log(`# core hook ${trigger}:${event} ${util.inspect(event)}`);
   }
 
-  hook(trigger, ...args) {
-    let message = "Core hook triggered: " + trigger + " with ";
-    if (args.length == 0) {
-      message += "no args";
-    } else {
-      message += "args " + JSON.stringify(args);
-    }
-    message = message.replace(/[\r\n\t]/g, "");
-    if (this.sls._demoEnabled) {
-      console.log(">> " + message);
-    }
+  hook(trigger) {
+    this.log("$ regular hook " + trigger);
   }
 
   load() {
-    let message = "Hello, I'm an instruction in the plugin load.";
-    message += " See how many times I ran. (expected: 2)";
-    this.log(message);
+    // Plugin loaded by pluginManager
+    this.log("Hello, I'm an instruction in the plugin load.", true);
+    this.log("> You should see me twice!", true);
+    if (this.sls._chDemoLoaded) {
+      // Plugin loaded before, skips
+      return;
+    }
+    // Plugin enabled only with 'demo' command
+    if (this.sls.processedInput.commands.includes("demo")) {
+      this.sls._chDemoEnabled = true;
+      return;
+    }
+    this.log("Plugin active but most output suppressed.", true);
+    this.log("> Use 'demo' command to check it out!", true);
+    // Plugin loaded
+    this.sls._chDemoLoaded = true;
   }
 
-  log(message) {
-    this.sls.cli.log("[CH Demo] " + message);
+  log(message, force = false) {
+    message = message.replace(/[\r\n\t]/g, "");
+    message = message.replace(/\s+/g, " ");
+    if (this.sls._chDemoEnabled || force) {
+      this.sls.cli.log("[CH Demo] " + message);
+    }
   }
 }
 
