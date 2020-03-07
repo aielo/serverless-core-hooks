@@ -1,8 +1,8 @@
 {
-  "name": "serverless-core-hooks-demo",
+  "name": "serverless-core-hooks-helloworld",
   "version": "0.1.0",
   "description": "",
-  "main": "CoreHooksDemo.js",
+  "main": "CoreHooksHelloWorld.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

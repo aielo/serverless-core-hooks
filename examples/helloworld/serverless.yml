@@ -1,0 +1,16 @@
+service: helloworld
+
+plugins:
+  - ./     # helloworld
+  - ../../ # serverless-core-hooks
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, env:stage, 'dev'}
+  region: ${opt:region, env:region, 'us-east-1'}
+
+custom:
+  coreHooks:
+    objects:
+      - serverless
