@@ -36,7 +36,7 @@ su - vagrant << NODE
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install v12.16.0
-npm install yarn np -g
+npm install yarn np@5.2 -g
 cd /vagrant; yarn install
 NODE
 
