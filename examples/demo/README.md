@@ -14,7 +14,7 @@ $ sls demo
 ```
 or `yarn`:
 ```
-[...]
+...
 $ yarn global add serverless
 $ yarn install
 $ sls demo

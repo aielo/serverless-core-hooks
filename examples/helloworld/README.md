@@ -13,7 +13,7 @@ $ sls print
 ```
 or `yarn`:
 ```
-[...]
+...
 $ yarn global add serverless
 $ yarn install
 $ sls print

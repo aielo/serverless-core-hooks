@@ -19,13 +19,13 @@ The purpose of **serverless-core-hooks** is to provide means for your plugins to
 It is really simple:
 1. You **specify which core object(s) you want to hook** via configuration:
 ```
-[...]
+...
 custom:
   coreHooks:
     objects:
       - serverless
       - pluginManager
-[...]
+...
 ```
 2. Then you **setup and use core hooks in your plugin**, on a similar fashion to regular ones:
 ```
@@ -44,11 +44,11 @@ module.exports = MyPlugin;
 ```
 3. Done! Actually, do not forget to **add both plugins to your configuration**:
 ```
-[...]
+...
 plugins:
   - serverless-core-hooks
   - my-plugin
-[...]
+...
 ```
 
 ## Which objects can I hook?
