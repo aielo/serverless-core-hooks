@@ -8,6 +8,7 @@ class CoreHooksInheritance extends CoreHooks {
   }
 
   configure() {
+    super.configure();
     Object.assign(this.hooks, {
       "before:serverless:init": this.hook.bind(this),
       "after:serverless:init": this.hook.bind(this),
@@ -15,11 +16,12 @@ class CoreHooksInheritance extends CoreHooks {
       "after:serverless:run": this.hook.bind(this)
     });
     this.config.core.push("serverless");
+    this.config.logPrefix = "[CH Inheritance] ";
   }
 
   hook(event, trigger) {
     trigger += `:${event.target._chName}:${event.key}`;
-    this.sls.cli.log("[CH Inheritance] Triggered: " + trigger);
+    this.log("Triggered " + trigger);
   }
 }
 

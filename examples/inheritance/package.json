@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "serverless-core-hooks": "^0.0.2-2"
+    "serverless-core-hooks": "^0.0.2-3"
   }
 }
