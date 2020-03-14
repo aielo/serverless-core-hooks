@@ -33,7 +33,7 @@ class CoreHooksHelloWorld {
   }
 
   log(message) {
-    this.sls.cli.log("[CH Example] " + message);
+    this.sls.cli.log("[CH HelloWorld] " + message);
   }
 }
 

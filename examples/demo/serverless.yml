@@ -2,7 +2,7 @@ service: demo
 
 plugins:
   - serverless-core-hooks
-  - ./ # demo
+  - ./
 
 provider:
   name: aws
