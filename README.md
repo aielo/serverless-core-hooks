@@ -16,7 +16,41 @@ Or imagine you want to add or change information to the configuration loaded fro
 The purpose of **serverless-core-hooks** is to provide means for your plugins to handle those types of requirement. The latter is actually what motivated its creation.
 
 ## How does it work?
-It is really simple:
+You can either inherit or use it directly from serverless configuration. Both ways are described below in more details.
+
+### Inheritance
+1. You create your own plugin, extending **serverless-core-hooks**:
+```
+const CoreHooks = require("serverless-core-hooks");
+class MyPlugin extends CoreHooks {
+  constructor(sls) {
+    super(sls);
+  }
+...
+```
+2. Then you override the `configure` method to **specify which core object(s) you want to hook**:
+```
+...
+  configure() {
+    this.config.core.push("serverless", "cli"); // adds (!replace)
+...
+```
+3. **Core hooks** might also be added:
+```
+...    
+    Object.assign(this.hooks, { // adds/merges (!replace)
+      "before:serverless:init": this.myHook.bind(this),
+      "after:serverless:run": this.myHook.bind(this),
+    });
+  }
+  myHook(event, trigger) {
+    this.sls.cli.log("core hooking some methods");
+  }
+}
+module.exports = MyPlugin;
+```
+
+### Direct serverless configuration
 1. You **specify which core object(s) you want to hook** via configuration:
 ```
 ...
@@ -64,6 +98,7 @@ Currently, it is possible to hook the `serverless` instance and all its children
 ## Examples
 - [Hello World](https://github.com/aielo/serverless-core-hooks/tree/master/examples/helloworld)
 - [Demo](https://github.com/aielo/serverless-core-hooks/tree/master/examples/demo)
+- [Inheritance](https://github.com/aielo/serverless-core-hooks/tree/master/examples/inheritance)
 
 ## Author
 Ricardo Aielo [@aielo](https://github.com/aielo/)
