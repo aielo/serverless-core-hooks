@@ -32,19 +32,20 @@ class MyPlugin extends CoreHooks {
 ```
 ...
   configure() {
+    super.configure();
     this.config.core.push("serverless", "cli"); // adds (!replace)
 ...
 ```
 3. **Core hooks** might also be added:
 ```
-...    
+...
     Object.assign(this.hooks, { // adds/merges (!replace)
       "before:serverless:init": this.myHook.bind(this),
       "after:serverless:run": this.myHook.bind(this),
     });
   }
   myHook(event, trigger) {
-    this.sls.cli.log("core hooking some methods");
+    this.log("core hooking some methods");
   }
 }
 module.exports = MyPlugin;
